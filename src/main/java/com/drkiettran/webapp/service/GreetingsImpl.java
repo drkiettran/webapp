@@ -40,7 +40,7 @@ public class GreetingsImpl implements GreetingsAPI {
 			"application/json" }, method = RequestMethod.PUT)
 	public ResponseEntity<Message> put(@RequestHeader HttpHeaders headers,
 			@ApiParam(value = "Simple Greetings", required = true) @Valid @RequestBody Message greetingsMessage) {
-		logger.info("Received: {}", greetingsMessage);
+		logger.info("***** I Received: {}", greetingsMessage);
 		Greetings greetings = new Greetings();
 		Message returnGreetingsMessage = new Message();
 		returnGreetingsMessage.setName("Webapp");
