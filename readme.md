@@ -45,5 +45,67 @@ http://localhost:8080/mappings
 
 ## Use Postman
 
-Make sure to specify authentication with user1/secret1 Basic.
+Make sure to specify authentication with user1/secret1 Basic Authentication.
+
+
+## Build with docker
+You would need to sign up for a free account with docker hub website to complete this assignment
+https://hub.docker.com. The sign up process is similar to that of the github.
+
+When you sign up for a docker hub account, you need to come up with your unique username.
+My username is drtran. Replace all drtran username with your own username.
+
+``` bash
+./mvnw -Ddocker.image.prefix=drtran clean install dockerfile:build
+
+docker login
+
+./mvnw -Ddocker.image.prefix=drtran clean install dockerfile:push
+```
+
+
+## Run as a docker container.
+
+``` bash
+docker run -p 8080:8080 drtran/webapp:latest
+```
+
+
+## Deploy docker image onto openshift.
+
+### Start OpenShift
+
+``` bash
+cd oc-server-311
+./start-oc.sh
+```
+
+### Import Docker image
+
+We'll use the default project 'myproject'. Use username/password as developer/developer
+
+```
+oc login 
+
+oc import-image drtran/webapp --from drtran/webapp --insecure --confirm=true --all=true --loglevel=10
+
+```
+
+### Create new application on OpenShift
+
+```
+oc new-app --name=greetings-webapp drtran/webapp
+
+oc expose svc greetings-webapp
+```
+
+### Find your hostname
+
+```
+oc describe route greetings-webapp | grep "Requested Host"
+```
+
+In this case my requested host is: greetings-webapp-myproject.127.0.0.1.nip.io.
+Your application URL should be: http://greetings-webapp-myproject.127.0.0.1.nip.io/api/v1/greetings/sayHello
+
 
