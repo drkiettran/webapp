@@ -3,6 +3,7 @@ This project demonstrate the use of Spring Boot to build
 simple web application, in particular, REST API application.
 
 ## To run as maven project.
+
 Most of the code was generated using this website `https://start.spring.io/`.
 See `HELP.md` from this folder for more information
 
@@ -12,7 +13,7 @@ To run the code as a server from the command line:
 mvn clean test spring-boot:run
 ```
 
-## Build
+## Build the application
 
 ``` bash
 mvn clean package.
@@ -20,19 +21,33 @@ mvn clean package.
 
 The generated (fat / all dependencies are include) is stored in the `target` folder.
 
-## To run it with the jar (all inclusive - no):
+## Run the application
 
 ``` bash
 java -jar target/webapp-0.0.1-SNAPSHOT.jar
 ```
 
-You can move/copy the `webapp-0.0.1-SNAPSHOT.jar` to any location and run it there using
-the same command:
+## Testing with Postman software
+Test it with Postman with the following information:
 
-``` bash
-cp target/webapp-0.0.1-SNAPSHOT.jar some-dir
-cd some-dir
-java -jar ./webapp-0.0.1-SNAPSHOT.jar
+- method is `PUT`
+- url is: http://localhost:8080/api/v1/greetings/sayHello
+- headers are: context-type: application/json, accept: application/json.
+- authorization is basic authentication with username/password as user1/secret1
+- body of the data should have these
+
+```
+{
+	"name": "Testing WebApp",
+	"message": "Greetings from Bolivia"
+}
+```
+
+## Testing with CURL
+Use this command to test your application:
+
+```
+curl -X PUT --user user1:secret1 http://localhost:8080/api/v1/greetings/sayHello -d '{"name": "my-name goes here", "message": "message goes here!"}' -H "Content-type: application/json" -H "Accept: application/json"
 ```
 
 Interesting URLS:
